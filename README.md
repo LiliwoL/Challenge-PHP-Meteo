@@ -1,10 +1,18 @@
 # Challenge PHP Meteo
 
-L'objectif est que le programme:
+L'objectif est que le programme :
 
 * Demande à l'utilisateur de saisir une ville
 * Fasse une requête auprès de l'API OpenWeatherMap
 * Affiche la météo correspondante
+
+# Dépendances
+
+Pour charger les informations sensibles depuis un fichier .env
+
+```bash
+composer require vlucas/phpdotenv
+```
 
 # Ressources
 

@@ -1,13 +1,17 @@
 <?php
 
 // 1. Get the city name from the command line argument
-$city = $argv[1];
+$city = readline("Saisir le nom d'une ville dont vous souhaitez connaître la météo: \n");
 
+// Load .env file
+require 'vendor/autoload.php';
+use Dotenv\Dotenv;
+$dotenv = Dotenv::createImmutable(__DIR__);       // Instance de Dotenv pour lire les fichiers .env
+$dotenv->safeLoad();
 
 // 2. Build the API URL with the city name and your API key
-$api_key = "YOUR_API_KEY";
-$url = "http://api.openweathermap.org/data/2.5/weather?q=" . $city . "&appid=" . $api_key;
-
+$api_key = $_ENV['API_KEY'];
+$url = "https://api.openweathermap.org/data/2.5/weather?q=" . $city . "&appid=" . $api_key . "&units=metric&lang=fr";
 
 
 // 3. Send a GET request to the API
@@ -34,7 +38,7 @@ if(array_key_exists("cod", $data) && $data["cod"] != 200)
 
 
 // 5. Extract the weather information
-$weather    = $data['weather'][0]['main'];
+$weather    = $data['weather'][0]['description'];
 $temp       = $data['main']['temp'];
 $temp_min   = $data['main']['temp_min'];
 $temp_max   = $data['main']['temp_max'];
@@ -42,6 +46,6 @@ $temp_max   = $data['main']['temp_max'];
 
 // 6. Print the weather information
 echo "Météo à  " . $city . ": " . $weather . "\n";
-echo "Température: " . $temp . "K\n";
-echo "Minimale: " . $temp_min . "K\n";
-echo "Maximale: " . $temp_max . "K\n";
+echo "Température: " . $temp . "°C\n";
+echo "Minimale: " . $temp_min . "°C\n";
+echo "Maximale: " . $temp_max . "°C\n";
